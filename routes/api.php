@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('api/verificarCodigoMesa', 'APIController@verificarCodigoMesa');
+Route::post('verificarCodigoMesa', 'APIController@verificarCodigoMesa');
