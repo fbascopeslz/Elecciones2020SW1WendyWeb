@@ -40,7 +40,7 @@ class APIController extends Controller
                     //Mostrar la imagen
                     $paquete->error = 0;
                     $paquete->message = "Usted ya envio la imagen para esta mesa";
-                    $paquete->values = null;                     
+                    $paquete->values = $array[0];                     
                 } else {
                     //Aun no se envio la imagen                    
                     $sql = "SELECT Mesa.codigo, Departamento.nombre as departamento, Provincia.nombre as provincia, 
