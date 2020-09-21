@@ -29,7 +29,7 @@ class APIController extends Controller
             
             if ($array !== null && count($array) > 0) {       
                 //Comprobar si ya envio la imagen para el Acta de Votos    
-                $sql = "SELECT *
+                $sql = "SELECT ActaVotos.imagen, ActaVotos.cantidadVotosTotal, ActaVotos.votosNulos, ActaVotos.votosBlancos  
                         FROM ActaVotos, Usuario
                         WHERE ActaVotos.idUsuario = Usuario.id and
                             Usuario.id = $idUsuario";
@@ -40,7 +40,7 @@ class APIController extends Controller
                     //Mostrar la imagen
                     $paquete->error = 0;
                     $paquete->message = "Usted ya envio la imagen para esta mesa";
-                    $paquete->values = $array[0];                     
+                    $paquete->values = null;                     
                 } else {
                     //Aun no se envio la imagen                    
                     $sql = "SELECT Mesa.codigo, Departamento.nombre as departamento, Provincia.nombre as provincia, 
