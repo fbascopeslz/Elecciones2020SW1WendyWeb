@@ -23,7 +23,7 @@ class APIController extends Controller
             $sql = "SELECT * 
                     FROM Mesa, Usuario
                     WHERE Usuario.idMesa = Mesa.id and
-                        Mesa.codigo = $codigo
+                        Mesa.codigo = $codigo and
                         Usuario.id = $idUsuario";
             $array = DB::select($sql);
             
