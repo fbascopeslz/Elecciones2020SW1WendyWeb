@@ -43,8 +43,8 @@ class APIController extends Controller
                     $paquete->values = $array[0];                     
                 } else {
                     //Aun no se envio la imagen                    
-                    $sql = "SELECT Mesa.codigo, Departamento.nombre, Provincia.nombre, 
-                                Municipio.nombre, Localidad.nombre, Recinto.nombre 
+                    $sql = "SELECT Mesa.codigo, Departamento.nombre as departamento, Provincia.nombre as provincia, 
+                                Municipio.nombre as municipio, Localidad.nombre as localidad, Recinto.nombre as recinto
                             FROM Departamento, Provincia, Municipio, Localidad, Recinto, Mesa, Usuario
                             WHERE Departamento.id = Provincia.idDepartamento and
                                 Provincia.id = Municipio.idProvincia and
