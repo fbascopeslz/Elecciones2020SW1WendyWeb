@@ -73,7 +73,7 @@ class APIController extends Controller
         } catch (\Throwable $th) {
             $paquete->error = 1;
             $paquete->message = "Ocurrio un error. Porfavor intente de nuevo";
-            $paquete->values = null;        
+            $paquete->values = $th;        
         }
 
         return response()->json(
