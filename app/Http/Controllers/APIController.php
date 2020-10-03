@@ -13,10 +13,8 @@ class APIController extends Controller
 {
     public function login(Request $request) 
     {
-        $login = $request->input("login");
-        //encriptar Password con bcrypt()
-        $password = $request->input("password");        
-        $password = md5($password);        
+        $login = $request->input("login");        
+        $password = $request->input("password"); //password llega en md5
 
         $paquete = new Paquete();
 
@@ -129,7 +127,7 @@ class APIController extends Controller
         );
     }
 
-    
+
     public function procesarIdPartidos($arrayVotos, $idActaVotos)
     {
         $SQL = "SELECT id, sigla 
