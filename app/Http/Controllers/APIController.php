@@ -98,7 +98,7 @@ class APIController extends Controller
                                 Localidad.id = Recinto.idLocalidad and
                                 Mesa.idRecinto = Recinto.id and
                                 Usuario.idMesa = Mesa.id and
-                                Usuario.id = " . $idUsuario;
+                                Usuario.id = $idUsuario";
                     $array = DB::select($sql);
 
                     //Mostrar informacion de la mesa
