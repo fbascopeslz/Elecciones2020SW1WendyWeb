@@ -11,6 +11,53 @@ use DB;
 
 class APIController extends Controller
 {
+    public function login(Request $request) 
+    {
+        $login = $request->input("login");
+        //encriptar Password con bcrypt()
+        $password = $request->input("password");        
+        $password = md5($password);        
+
+        $paquete = new Paquete();
+
+        try {
+            //idRol: 1 => Delegado de mesa
+            $SQL = "SELECT *
+                    FROM Usuario 
+                    WHERE (login = '$login' OR correo = '$login')
+                        and password = '$password' 
+                        and idRol = 1";
+            $array = DB::select($SQL);                    
+            
+            if ($array !== null && count($array) > 0) {
+                $paquete->error = 0;
+                $paquete->message = "Usuario encontrado";
+                $paquete->values = $array[0];                    
+
+                return response()->json(
+                    $paquete
+                );
+            }        
+
+            $paquete->error = 1;
+            $paquete->message = "Usuario o Contraseña incorrectos";
+            $paquete->values = null;
+            return response()->json(
+                $paquete
+            );
+            
+        } catch (\Throwable $th) {
+            $paquete->error = 2;
+            $paquete->message = "Ocurrio un error. Porfavor intente de nuevo";
+            $paquete->values = $th;        
+        }
+
+        return response()->json(
+            $paquete
+        );
+    }
+
+
     public function verificarCodigoMesa(Request $request)
     {
         $codigo = $request->input("codigo");
@@ -27,9 +74,10 @@ class APIController extends Controller
                         Usuario.id = $idUsuario";
             $array = DB::select($sql);
             
-            if ($array !== null && count($array) > 0) {       
+            if ($array !== null && count($array) > 0) {                       
                 //Comprobar si ya envio la imagen para el Acta de Votos    
-                $sql = "SELECT ActaVotos.imagen, ActaVotos.cantidadVotosTotal, ActaVotos.votosNulos, ActaVotos.votosBlancos  
+                $sql = "SELECT ActaVotos.imagen, ActaVotos.hora, ActaVotos.fecha, 
+                            ActaVotos.cantidadVotosTotal, ActaVotos.votosNulos, ActaVotos.votosBlancos  
                         FROM ActaVotos, Usuario
                         WHERE ActaVotos.idUsuario = Usuario.id and
                             Usuario.id = $idUsuario";
@@ -81,5 +129,94 @@ class APIController extends Controller
         );
     }
 
+    
+    public function procesarIdPartidos($arrayVotos, $idActaVotos)
+    {
+        $SQL = "SELECT id, sigla 
+                FROM Partido";
+        $query = DB::select($SQL);
+
+        $array = [];
+        
+        //indice 0 al 2 son los VotosTotales, VotosNulos y VotosBlancos
+        for ($i=3; $i < count($arrayVotos); $i++) { 
+            for ($j=0; $j < count($query); $j++) { 
+                if (strpos($query[$j]["sigla"], $arrayVotos[$i]["sigla"]) ) {                    
+                    $array[] = ['idPartido' => $query[$j]["id"], 'idActaVotos' => $idActaVotos, 'cantVotosPartido' => $arrayVotos[$i]["votos"]];
+                    break;
+                }
+            }
+        }
+
+        return $array;
+    }
+        
+    public function procesarTextoImagen(Request $request)
+    {
+        $idUsuario = $request->input("idUsuario");
+        $arrayVotos = json_decode($request->input("arrayVotos"), true);
+        $urlImagen = $request->input("urlImagen");    
+
+        $paquete = new Paquete();        
+
+        try {        
+            $idActaVotos = DB::table('ActaVotos')->insertGetId(
+                ['cantTotal' => $arrayVotos[0]["votos"],                
+                'votosBlanco' => $arrayVotos[1]["votos"],
+                'votosNulos' => $arrayVotos[2]["votos"],
+                'fecha' => date('Y-m-d'), 
+                'hora' => date('H:i:s'),
+                'imagen' => $urlImagen,
+                'idUsuario' => $idUsuario,]               
+            );
+
+
+            //Buscar los ids de cada partido 
+            //$array = $this->procesarIdPartidos($arrayVotos, $idActaVotos);
+            $SQL = "SELECT id, sigla 
+                FROM Partido";
+            $query = DB::select($SQL);
+            $array = [];                                   
+            //indice 0 al 2 son los VotosTotales, VotosNulos y VotosBlancos
+            for ($i=3; $i < count($arrayVotos); $i++) { 
+                for ($j=0; $j < count($query); $j++) { 
+                    if ($arrayVotos[$i]["sigla"] == $query[$j]->sigla) {                    
+                        $array[] = ['idPartido' => $query[$j]->id, 'idActaVotos' => $idActaVotos, 'cantvotopartido' => $arrayVotos[$i]["votos"]];
+                        break;
+                    }
+                }
+            }
+
+
+            if ($idActaVotos !== null) {
+                DB::table('PartidoActaVotos')->insert(
+                    $array
+                );                    
+
+                $paquete->error = 0;
+                $paquete->message = "Datos procesados correctamente";
+                $paquete->values = null;
+
+                return response()->json(
+                    $paquete
+                );
+            } 
+                    
+            $paquete->error = 1;
+            $paquete->message = "No se puede procesar el texto porfavor intente de nuevo";
+            $paquete->values = null;
+            return response()->json(
+                $paquete
+            );
+            
+        } catch (\Throwable $th) {
+            $paquete->error = 1;
+            $paquete->message = "Ocurrio un error. Porfavor intente de nuevo";
+            $paquete->values = $th->getMessage();      
+            return response()->json(
+                $paquete
+            );  
+        }        
+    }
     
 }
