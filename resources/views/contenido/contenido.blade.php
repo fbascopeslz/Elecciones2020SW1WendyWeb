@@ -6,8 +6,16 @@
 
     @if(Auth::check())
         <template v-if="menu==1">
-            <tabla-bootstrap></tabla-bootstrap>
-        </template>                       
+            <acta-votos></acta-votos>
+        </template>
+        
+        <template v-if="menu==2">
+            <reportes></reportes>
+        </template>  
+
+        <template v-if="menu==3">
+            <reportes></reportes>
+        </template>  
     @endif    
     
 @endsection

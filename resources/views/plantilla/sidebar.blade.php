@@ -10,6 +10,20 @@
                 <p>Acta de Votos</p>
             </a>
         </li>
+
+        <li @click="menu=2" class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                <p>Resultados</p>
+            </a>
+        </li>
+
+        <li @click="menu=3" class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-bar"></i>
+                <p>Graficas</p>
+            </a>
+        </li>
    
 
     </ul>

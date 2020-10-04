@@ -46,7 +46,14 @@ Route::group(['middleware' => ['auth']], function(){ //Rutas para usuario autent
     Route::post('/usuario/registrar', 'UserController@store');
     Route::post('/usuario/actualizar', 'UserController@update');
     Route::put('/usuario/desactivar', 'UserController@desactivar');
-    Route::put('/usuario/activar', 'UserController@activar');        
+    Route::put('/usuario/activar', 'UserController@activar');
+    
+
+    //Reporte de resultados
+    Route::get('/listarResultadosNacionales', 'ReportesController@listarResultadosNacionales');
+    Route::get('/listarResultadosDepartamentales', 'ReportesController@listarResultadosDepartamentales');
+
+    Route::get('/getDepartamentos', 'ReportesController@getDepartamentos');
         
 
 });

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Sistema para las Elecciones 2020">
-    <meta name="author" content="FICCT">
+    <meta name="author" content="Wendy">
     <meta name="keyword" content="Elecciones 2020">
 
     <title>ELECCIONES 2020</title>
