@@ -52,8 +52,10 @@ Route::group(['middleware' => ['auth']], function(){ //Rutas para usuario autent
     //Reporte de resultados
     Route::get('/listarResultadosNacionales', 'ReportesController@listarResultadosNacionales');
     Route::get('/listarResultadosDepartamentales', 'ReportesController@listarResultadosDepartamentales');
+    Route::get('/listarResultadosRecintos', 'ReportesController@listarResultadosRecintos');
 
     Route::get('/getDepartamentos', 'ReportesController@getDepartamentos');
+    Route::get('/getRecintos', 'ReportesController@getRecintos');
         
 
 });

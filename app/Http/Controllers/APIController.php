@@ -159,8 +159,8 @@ class APIController extends Controller
 
         try {        
             $idActaVotos = DB::table('ActaVotos')->insertGetId(
-                ['cantTotal' => $arrayVotos[0]["votos"],                
-                'votosBlanco' => $arrayVotos[1]["votos"],
+                ['cantidadVotosTotal' => $arrayVotos[0]["votos"],                
+                'votosBlancos' => $arrayVotos[1]["votos"],
                 'votosNulos' => $arrayVotos[2]["votos"],
                 'fecha' => date('Y-m-d'), 
                 'hora' => date('H:i:s'),
@@ -179,7 +179,7 @@ class APIController extends Controller
             for ($i=3; $i < count($arrayVotos); $i++) { 
                 for ($j=0; $j < count($query); $j++) { 
                     if ($arrayVotos[$i]["sigla"] == $query[$j]->sigla) {                    
-                        $array[] = ['idPartido' => $query[$j]->id, 'idActaVotos' => $idActaVotos, 'cantvotopartido' => $arrayVotos[$i]["votos"]];
+                        $array[] = ['idPartido' => $query[$j]->id, 'idActaVotos' => $idActaVotos, 'cantidadVotosPartido' => $arrayVotos[$i]["votos"]];
                         break;
                     }
                 }
@@ -187,7 +187,7 @@ class APIController extends Controller
 
 
             if ($idActaVotos !== null) {
-                DB::table('PartidoActaVotos')->insert(
+                DB::table('VotosPartido')->insert(
                     $array
                 );                    
 

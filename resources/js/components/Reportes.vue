@@ -26,7 +26,7 @@
                             
                             <template v-if="opcionMostrar == 2">
                                 <div>
-                                    Seleccione el departamento: 
+                                    Seleccione el Departamento: 
                                     <select class="form-control" @change="onChangeSelectDepartamento($event)" v-model="opcionIdDepartamento">
                                         <option value="">Seleccione</option>
                                         <option v-for="dep in arrayDepartamentos" :key="dep.id" :value="dep.id" v-text="dep.nombre"></option>
@@ -35,7 +35,13 @@
                             </template>
                             
                             <template v-if="opcionMostrar == 3">
-                                Nivel Recinto
+                                <div>
+                                    Seleccione el Recinto: 
+                                    <select class="form-control" @change="onChangeSelectRecinto($event)" v-model="opcionIdRecinto">
+                                        <option value="">Seleccione</option>
+                                        <option v-for="rec in arrayRecintos" :key="rec.id" :value="rec.id" v-text="rec.nombre"></option>
+                                    </select>
+                                </div>
                             </template>
 
                         </div>
@@ -105,6 +111,9 @@
                 arrayDepartamentos: [],
                 opcionIdDepartamento: 1,
 
+                arrayRecintos: [],
+                opcionIdRecinto: 1,
+
                               
                 //opciones para Vue loading overlay        
                 optionsLoadingOverlay : {                        
@@ -173,7 +182,36 @@
                         // always executed
                     });
             },
+
+            listarResultadosRecintos(idRecinto) {
+                let loader = this.$loading.show(this.optionsLoadingOverlay);
+
+                let me = this;
+
+                var url = 'listarResultadosRecintos?idRecinto=' + idRecinto;
+                
+                axios.get(url)
+                    .then(function (response) {
+                        // handle success
+                        //console.log(response);
+
+                        var respuesta = response.data;
+                        me.arrayResultados = respuesta;                        
+
+                        loader.hide();
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+
+                        loader.hide();
+                    })
+                    .then(function () {
+                        // always executed
+                    });
+            },
             
+
             getDepartamentos() {
                 let loader = this.$loading.show(this.optionsLoadingOverlay);
 
@@ -202,16 +240,59 @@
                     });
             },
 
+            getRecintos() {
+                let loader = this.$loading.show(this.optionsLoadingOverlay);
+
+                let me = this;
+
+                var url = 'getRecintos';
+                
+                axios.get(url)
+                    .then(function (response) {
+                        // handle success
+                        console.log(response);
+
+                        var respuesta = response.data;
+                        me.arrayRecintos = respuesta;                        
+
+                        loader.hide();
+                    })
+                    .catch(function (error) {
+                        // handle error
+                        console.log(error);
+
+                        loader.hide();
+                    })
+                    .then(function () {
+                        // always executed
+                    });
+            },
+
+
             onChangeSelect(event) {                
                 console.log(this.opcionMostrar);
                 switch (this.opcionMostrar) {
                     case "2":
                         this.getDepartamentos();
                         break;
+
+                    case "3":
+                        this.getRecintos();
+                        break;
                 
                     default:
                         break;
                 }
+            },
+
+            onChangeSelectDepartamento(event) {                
+                console.log(this.opcionIdDepartamento);
+                this.listarResultadosDepartamentales(this.opcionIdDepartamento);
+            },
+
+            onChangeSelectRecinto(event) {                
+                console.log(this.opcionIdRecinto);
+                this.listarResultadosRecintos(this.opcionIdRecinto);
             },
 
         },
