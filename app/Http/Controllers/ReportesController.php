@@ -19,7 +19,7 @@ class ReportesController extends Controller
 
         $array = DB::select($SQL);
 
-        return $array;
+        return $array;        
     }
 
     public function getDepartamentos()

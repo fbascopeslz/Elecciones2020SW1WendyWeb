@@ -69,8 +69,7 @@ class UsuarioController extends Controller
         $usuario->apellidos = $request->apellidos;
         $usuario->ci = $request->ci;
         $usuario->telefono = $request->telefono;
-        $usuario->correo = $request->correo;
-        $usuario->estado = $request->estado;
+        $usuario->correo = $request->correo;        
         
         $usuario->idRol = $request->idRol;
 
@@ -99,8 +98,7 @@ class UsuarioController extends Controller
         $usuario->apellidos = $request->apellidos;
         $usuario->ci = $request->ci;
         $usuario->telefono = $request->telefono;
-        $usuario->correo = $request->correo;
-        $usuario->estado = $request->estado;
+        $usuario->correo = $request->correo;        
         
         $usuario->idRol = $request->idRol;        
                         

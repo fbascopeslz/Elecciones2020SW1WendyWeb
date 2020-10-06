@@ -57,6 +57,7 @@
 
 </main>
 </template>
+
 <script>
     import Chart from 'chart.js';
 

@@ -385,7 +385,7 @@
                         'apellidos': this.apellidos,
                         'ci': this.ci,
                         'telefono': this.telefono,
-                        'correo': this.correo,                
+                        'correo': this.correo,                                  
                         'idRol': this.idRol
                     }                    
                 ).then(function (response) {

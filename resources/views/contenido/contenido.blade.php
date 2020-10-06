@@ -7,7 +7,7 @@
     @if(Auth::check())
         <template v-if="menu==1">
             <acta-votos></acta-votos>
-        </template>
+        </template>    
         
         <template v-if="menu==2">
             <reportes></reportes>
