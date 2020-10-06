@@ -6,14 +6,14 @@
     
         <li @click="menu=1" class="nav-item">
             <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
+                <i class="nav-icon fas fa-vote-yea"></i>
                 <p>Acta de Votos</p>
             </a>
         </li>
 
         <li @click="menu=2" class="nav-item">
             <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-bar"></i>
+                <i class="nav-icon fas fa-poll-h"></i>
                 <p>Resultados</p>
             </a>
         </li>
@@ -24,7 +24,13 @@
                 <p>Graficas</p>
             </a>
         </li>
-   
+
+        <li @click="menu=4" class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Usuarios</p>
+            </a>
+        </li> 
 
     </ul>
 </nav>

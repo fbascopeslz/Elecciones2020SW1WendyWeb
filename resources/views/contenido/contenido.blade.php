@@ -14,8 +14,12 @@
         </template>  
 
         <template v-if="menu==3">
-            <reportes></reportes>
-        </template>  
+            <graficas></graficas>
+        </template>
+
+        <template v-if="menu==4">
+            <usuarios></usuarios>
+        </template> 
     @endif    
     
 @endsection

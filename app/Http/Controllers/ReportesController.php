@@ -62,19 +62,17 @@ class ReportesController extends Controller
         return $array;
     }
 
-    public function listarResultadosRecintos(Request $request) 
+    public function listarResultadosRecintos(Request $request)
     {
-        $idDepartamento = $request->idDepartamento;
+        $idRecinto = $request->idRecinto;
 
         $SQL = "SELECT P.nombre as NombrePartido, P.sigla as SiglaPartido, 
                     SUM(VP.cantidadVotosPartido) as VotosTotales
-                FROM Partido as P, VotosPartido as VP, ActaVotos as A, Usuario as U, Mesa as M,
-                    Recinto as R, Localidad as L, Municipio as Mun, Provincia as Prov, Departamento as D
+                FROM Partido as P, VotosPartido as VP, ActaVotos as A, 
+                    Usuario as U, Mesa as M, Recinto as R
                 WHERE VP.idPartido = P.id and VP.idActaVotos = A.id and
                     A.idUsuario = U.id and U.idMesa = M.id and
-                    M.idRecinto = R.id and R.idLocalidad = L.id and
-                    L.idMunicipio = Mun.id and Mun.idProvincia = Prov.id and
-                    Prov.idDepartamento = D.id and D.id = $idDepartamento            
+                    M.idRecinto = R.id and R.id = $idRecinto
                 GROUP BY P.nombre, P.sigla";
 
         $array = DB::select($SQL);

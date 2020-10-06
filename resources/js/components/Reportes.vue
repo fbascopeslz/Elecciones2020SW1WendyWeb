@@ -6,7 +6,6 @@
                 <div class="card-header">
                     <i class="fa fa-align-justify"></i> Resultados en Boca de Urna                   
                 </div>
-
                 
                 <div class="card-body">
                     <div class="card">
@@ -272,6 +271,10 @@
             onChangeSelect(event) {                
                 console.log(this.opcionMostrar);
                 switch (this.opcionMostrar) {
+                    case "1":
+                        this.listarResultadosNacionales();
+                        break;
+                    
                     case "2":
                         this.getDepartamentos();
                         break;

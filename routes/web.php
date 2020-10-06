@@ -42,12 +42,15 @@ Route::group(['middleware' => ['auth']], function(){ //Rutas para usuario autent
     })->name('main'); //Alias de la ruta
     
 
-    Route::get('/actaVotos', 'ActaVotosController@index');    
-    Route::post('/usuario/registrar', 'UserController@store');
-    Route::post('/usuario/actualizar', 'UserController@update');
-    Route::put('/usuario/desactivar', 'UserController@desactivar');
-    Route::put('/usuario/activar', 'UserController@activar');
-    
+    Route::get('/actaVotos', 'ActaVotosController@index');
+
+    Route::get('/usuario', 'UsuarioController@index');
+    Route::post('/usuario/registrar', 'UsuarioController@store');
+    Route::post('/usuario/actualizar', 'UsuarioController@update');
+    Route::put('/usuario/desactivar', 'UsuarioController@desactivar');
+    Route::put('/usuario/activar', 'UsuarioController@activar');
+
+    Route::get('/rol/selectRol', 'UsuarioController@selectRol');
 
     //Reporte de resultados
     Route::get('/listarResultadosNacionales', 'ReportesController@listarResultadosNacionales');
@@ -56,6 +59,9 @@ Route::group(['middleware' => ['auth']], function(){ //Rutas para usuario autent
 
     Route::get('/getDepartamentos', 'ReportesController@getDepartamentos');
     Route::get('/getRecintos', 'ReportesController@getRecintos');
+
+    //Graficas
+    Route::get('/listarResultadosNacionalesGraficas', 'GraficasController@listarResultadosNacionalesGraficas');    
         
 
 });

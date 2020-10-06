@@ -35,8 +35,9 @@ require('bootstrap-table/dist/extensions/filter-control/bootstrap-table-filter-c
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('acta-votos', require('./components/ActaVotos.vue').default);
-
 Vue.component('reportes', require('./components/Reportes.vue').default);
+Vue.component('graficas', require('./components/Graficas.vue').default);
+Vue.component('usuarios', require('./components/Usuario.vue').default);
 
 
 
